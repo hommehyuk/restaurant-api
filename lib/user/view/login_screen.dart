@@ -9,55 +9,65 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      child: SafeArea(
-        top: true,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _Title(),
-            _SubTitle(),
-            Image.asset(
-              'asset/img/misc/logo.png',
-              width: MediaQuery.of(context).size.width / 3 * 2,
-            ),
-            CustomTextFormField(
-              hintText: '이메일을 입력 해주세요.',
-              onChanged: (String value) {},
-            ),
-            CustomTextFormField(
-              hintText: '비밀번호를 입력 해주세요.',
-              onChanged: (String value) {},
-              obscureText: true,
-            ),
-            ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                backgroundColor: PRIMARY_COLOR,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(4.0)),
-              ),
-              child: Text(
-                '로그인',
-                style: TextStyle(
-                  color: Colors.white,
+      child: SingleChildScrollView(
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+        child: SafeArea(
+          top: true,
+          bottom: false,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _Title(),
+                const SizedBox(height: 16.0),
+                _SubTitle(),
+                Image.asset(
+                  'asset/img/misc/logo.png',
+                  width: MediaQuery.of(context).size.width / 3 * 2,
                 ),
-              ),
-            ),
-            TextButton(
-              onPressed: () {},
-              style: TextButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4.0),
+                CustomTextFormField(
+                  hintText: '이메일을 입력 해주세요.',
+                  onChanged: (String value) {},
                 ),
-              ),
-              child: Text(
-                '회원가입',
-                style: TextStyle(
-                  color: Colors.black,
+                const SizedBox(height: 16.0),
+                CustomTextFormField(
+                  hintText: '비밀번호를 입력 해주세요.',
+                  onChanged: (String value) {},
+                  obscureText: true,
                 ),
-              ),
+                SizedBox(height: 16.0),
+                ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: PRIMARY_COLOR,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4.0)),
+                  ),
+                  child: Text(
+                    '로그인',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  style: TextButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(4.0),
+                    ),
+                  ),
+                  child: Text(
+                    '회원가입',
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
