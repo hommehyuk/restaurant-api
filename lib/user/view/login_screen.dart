@@ -6,9 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:restaurant_api/common/component/custom_text_form_field.dart';
 import 'package:restaurant_api/common/const/colors.dart';
 import 'package:restaurant_api/common/layout/default_layout.dart';
+import 'package:restaurant_api/common/view/root_tab.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  String username = '';
+  String password = '';
 
   @override
   Widget build(BuildContext context) {
@@ -40,19 +49,23 @@ class LoginScreen extends StatelessWidget {
                 ),
                 CustomTextFormField(
                   hintText: '이메일을 입력 해주세요.',
-                  onChanged: (String value) {},
+                  onChanged: (String value) {
+                    username = value;
+                  },
                 ),
                 const SizedBox(height: 16.0),
                 CustomTextFormField(
                   hintText: '비밀번호를 입력 해주세요.',
-                  onChanged: (String value) {},
+                  onChanged: (String value) {
+                    password = value;
+                  },
                   obscureText: true,
                 ),
                 SizedBox(height: 16.0),
                 ElevatedButton(
                   onPressed: () async {
                     // ID:비밀번호
-                    final rawString = 'test@codefactory.ai:testtest';
+                    final rawString = '$username:$password';
 
                     Codec<String, String> stringToBase64 = utf8.fuse(base64);
 
@@ -64,6 +77,12 @@ class LoginScreen extends StatelessWidget {
                         headers: {
                           'authorization': 'Basic $token',
                         },
+                      ),
+                    );
+
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => RootTab(),
                       ),
                     );
 
