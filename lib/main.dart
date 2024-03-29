@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_api/common/view/splash_screen.dart';
 import 'package:restaurant_api/user/view/login_screen.dart';
 
 void main() {
@@ -17,7 +18,7 @@ class _App extends StatelessWidget {
         fontFamily: 'NotoSans',
       ),
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      home: SplashScreen(),
     );
   }
 }
