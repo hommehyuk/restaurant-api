@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_api/common/view/splash_screen.dart';
-import 'package:restaurant_api/user/view/login_screen.dart';
 
 void main() {
   runApp(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_api/common/const/colors.dart';
+import 'package:restaurant_api/restaurant/model/restaurant_detail_model.dart';
 import 'package:restaurant_api/restaurant/model/restaurant_model.dart';
 
 class RestaurantCard extends StatelessWidget {
@@ -52,10 +53,6 @@ class RestaurantCard extends StatelessWidget {
         model.thumbUrl,
         fit: BoxFit.cover,
       ),
-      // image: Image.asset(
-      //   'asset/img/food/ddeok_bok_gi.jpg',
-      //   fit: BoxFit.cover,
-      // ),
       name: model.name,
       tags: model.tags,
       ratingsCount: model.ratingsCount,
@@ -63,6 +60,7 @@ class RestaurantCard extends StatelessWidget {
       deliveryFee: model.deliveryFee,
       ratings: model.ratings,
       isDetail: isDetail,
+      detail: model is RestaurantDetailModel ? model.detail : null,
     );
   }
 
