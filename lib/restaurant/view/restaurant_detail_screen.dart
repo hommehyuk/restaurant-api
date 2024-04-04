@@ -6,6 +6,7 @@ import 'package:restaurant_api/restaurant/component/restaurant_card.dart';
 import 'package:restaurant_api/restaurant/model/restaurant_detail_model.dart';
 import 'package:restaurant_api/restaurant/model/restaurant_model.dart';
 import 'package:restaurant_api/restaurant/provider/restaurant_provider.dart';
+import 'package:skeletons/skeletons.dart';
 
 class RestaurantDetailScreen extends ConsumerStatefulWidget {
   final String id;
@@ -48,12 +49,38 @@ class _RestaurantDetailScreenState
           renderTop(
             model: state,
           ),
+          if (state is! RestaurantDetailModel) renderLoading(),
           if (state is RestaurantDetailModel) renderLabel(),
           if (state is RestaurantDetailModel)
             renderProducts(
               products: state.products,
             ),
         ],
+      ),
+    );
+  }
+
+  SliverPadding renderLoading() {
+    return SliverPadding(
+      padding: EdgeInsets.symmetric(
+        vertical: 16.0,
+        horizontal: 16.0,
+      ),
+      sliver: SliverList(
+        delegate: SliverChildListDelegate(
+          List.generate(
+            3,
+            (index) => Padding(
+              padding: const EdgeInsets.only(bottom: 32.0),
+              child: SkeletonParagraph(
+                style: SkeletonParagraphStyle(
+                  lines: 5,
+                  padding: EdgeInsets.zero,
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
