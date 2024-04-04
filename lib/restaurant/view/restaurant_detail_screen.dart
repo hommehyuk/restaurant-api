@@ -1,17 +1,13 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:restaurant_api/common/const/data.dart';
-import 'package:restaurant_api/common/dio/dio.dart';
 import 'package:restaurant_api/common/layout/default_layout.dart';
 import 'package:restaurant_api/product/component/product_card.dart';
 import 'package:restaurant_api/restaurant/component/restaurant_card.dart';
 import 'package:restaurant_api/restaurant/model/restaurant_detail_model.dart';
 import 'package:restaurant_api/restaurant/model/restaurant_model.dart';
 import 'package:restaurant_api/restaurant/provider/restaurant_provider.dart';
-import 'package:restaurant_api/restaurant/repository/restaurant_repository.dart';
 
-class RestaurantDetailScreen extends ConsumerWidget {
+class RestaurantDetailScreen extends ConsumerStatefulWidget {
   final String id;
 
   const RestaurantDetailScreen({
@@ -20,8 +16,22 @@ class RestaurantDetailScreen extends ConsumerWidget {
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(restaurantDetailProvider(id));
+  ConsumerState<RestaurantDetailScreen> createState() =>
+      _RestaurantDetailScreenState();
+}
+
+class _RestaurantDetailScreenState
+    extends ConsumerState<RestaurantDetailScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    ref.read(restaurantProvider.notifier).getDetail(id: widget.id);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final state = ref.watch(restaurantDetailProvider(widget.id));
 
     if (state == null) {
       return DefaultLayout(
@@ -38,10 +48,11 @@ class RestaurantDetailScreen extends ConsumerWidget {
           renderTop(
             model: state,
           ),
-          // renderLabel(),
-          // renderProducts(
-          //   products: snapshot.data!.products,
-          // ),
+          if (state is RestaurantDetailModel) renderLabel(),
+          if (state is RestaurantDetailModel)
+            renderProducts(
+              products: state.products,
+            ),
         ],
       ),
     );
