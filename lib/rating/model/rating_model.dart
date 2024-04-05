@@ -1,11 +1,12 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:restaurant_api/common/model/model_with_id.dart';
 import 'package:restaurant_api/common/utils/data_utils.dart';
 import 'package:restaurant_api/user/model/user_model.dart';
 
 part 'rating_model.g.dart';
 
 @JsonSerializable()
-class RatingModel {
+class RatingModel implements IModelWithId {
   final String id;
   final UserModel user;
   final int rating;
