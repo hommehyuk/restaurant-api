@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:restaurant_api/common/layout/default_layout.dart';
 import 'package:restaurant_api/product/component/product_card.dart';
+import 'package:restaurant_api/rating/component/rating_card.dart';
 import 'package:restaurant_api/restaurant/component/restaurant_card.dart';
 import 'package:restaurant_api/restaurant/model/restaurant_detail_model.dart';
 import 'package:restaurant_api/restaurant/model/restaurant_model.dart';
@@ -55,6 +56,20 @@ class _RestaurantDetailScreenState
             renderProducts(
               products: state.products,
             ),
+          SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            sliver: SliverToBoxAdapter(
+              child: RatingCard(
+                avatarImage: AssetImage(
+                  'asset/img/logo/codefactory_logo.png',
+                ),
+                images: [],
+                rating: 4,
+                content: '맛있습니다.',
+                email: 'hommehyuk@gmail.com',
+              ),
+            ),
+          ),
         ],
       ),
     );
