@@ -7,6 +7,7 @@ import 'package:restaurant_api/restaurant/component/restaurant_card.dart';
 import 'package:restaurant_api/restaurant/model/restaurant_detail_model.dart';
 import 'package:restaurant_api/restaurant/model/restaurant_model.dart';
 import 'package:restaurant_api/restaurant/provider/restaurant_provider.dart';
+import 'package:restaurant_api/restaurant/provider/restaurant_rating_provider.dart';
 import 'package:skeletons/skeletons.dart';
 
 class RestaurantDetailScreen extends ConsumerStatefulWidget {
@@ -34,6 +35,9 @@ class _RestaurantDetailScreenState
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(restaurantDetailProvider(widget.id));
+    final ratingState = ref.watch(restaurantRatingProvider(widget.id));
+
+    print(ratingState);
 
     if (state == null) {
       return DefaultLayout(
