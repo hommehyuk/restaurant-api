@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_api/common/const/colors.dart';
 import 'package:restaurant_api/common/layout/default_layout.dart';
+import 'package:restaurant_api/product/view/product_tab.dart';
 import 'package:restaurant_api/restaurant/view/restaurant_screen.dart';
 
 class RootTab extends StatefulWidget {
@@ -46,11 +47,7 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
         controller: controller,
         children: [
           RestaurantScreen(),
-          Center(
-            child: Container(
-              child: Text('음식'),
-            ),
-          ),
+          ProductTab(),
           Center(
             child: Container(
               child: Text('주문'),
