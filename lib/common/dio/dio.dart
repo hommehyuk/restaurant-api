@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:restaurant_api/common/const/data.dart';
 import 'package:restaurant_api/common/secure_storage/secure_storage.dart';
+import 'package:restaurant_api/user/provider/auth_provider.dart';
+import 'package:restaurant_api/user/provider/user_me_provider.dart';
 
 final dioProvider = Provider<Dio>((ref) {
   final dio = Dio();
@@ -10,7 +12,10 @@ final dioProvider = Provider<Dio>((ref) {
   final storage = ref.watch(secureStorageProvider);
 
   dio.interceptors.add(
-    CustomInterceptor(storage: storage),
+    CustomInterceptor(
+      storage: storage,
+      ref: ref,
+    ),
   );
 
   return dio;
@@ -18,9 +23,11 @@ final dioProvider = Provider<Dio>((ref) {
 
 class CustomInterceptor extends Interceptor {
   final FlutterSecureStorage storage;
+  final Ref ref;
 
   CustomInterceptor({
     required this.storage,
+    required this.ref,
   });
 
   // 1) 요청 보낼 때
@@ -106,6 +113,15 @@ class CustomInterceptor extends Interceptor {
 
         return handler.resolve(response);
       } on DioException catch (e) {
+        // circular dependency error
+        // A, B
+        // A -> B의 친구
+        // B -> A의 친구
+        // A는 B의 친구 구나
+        // A -> B -> A -> B -> A -> B
+        // ump -> dio -> ump -> dio
+        ref.read(authProvider.notifier).logout();
+
         return handler.reject(e);
       }
     }
