@@ -3,6 +3,7 @@ import 'package:restaurant_api/common/const/colors.dart';
 import 'package:restaurant_api/common/layout/default_layout.dart';
 import 'package:restaurant_api/product/view/product_screen.dart';
 import 'package:restaurant_api/restaurant/view/restaurant_screen.dart';
+import 'package:restaurant_api/user/view/profile_screen.dart';
 
 class RootTab extends StatefulWidget {
   static String get routeName => '/home';
@@ -55,11 +56,7 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
               child: Text('주문'),
             ),
           ),
-          Center(
-            child: Container(
-              child: Text('프로필'),
-            ),
-          ),
+          ProfileScreen(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
