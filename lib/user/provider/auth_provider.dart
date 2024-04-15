@@ -1,8 +1,13 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:restaurant_api/common/view/root_tab.dart';
+import 'package:restaurant_api/common/view/splash_screen.dart';
+import 'package:restaurant_api/restaurant/view/restaurant_detail_screen.dart';
 import 'package:restaurant_api/user/model/user_model.dart';
 import 'package:restaurant_api/user/provider/user_me_provider.dart';
+import 'package:restaurant_api/user/view/login_screen.dart';
 
 final authProvider = ChangeNotifierProvider<AuthProvider>((ref) {
   return AuthProvider(ref: ref);
@@ -21,15 +26,41 @@ class AuthProvider extends ChangeNotifier {
     });
   }
 
+  List<GoRoute> get routes => [
+        GoRoute(
+          path: '/',
+          name: RootTab.routeName,
+          builder: (_, __) => RootTab(),
+          routes: [
+            GoRoute(
+              path: 'restaurant/:rid',
+              builder: (_, state) => RestaurantDetailScreen(
+                id: state.pathParameters['rid']!,
+              ),
+            ),
+          ],
+        ),
+        GoRoute(
+          path: '/splash',
+          name: SplashScreen.routeName,
+          builder: (_, __) => SplashScreen(),
+        ),
+        GoRoute(
+          path: '/login',
+          name: LoginScreen.routeName,
+          builder: (_, __) => LoginScreen(),
+        ),
+      ];
+
   // SplashScreen
   // 앱을 처음 시작 했을때
   // 토큰이 존재 하는지 확인 하고
   // 로그인 스크린 으로 보내 줄지
   // 홈 스크린 으로 보내 줄지 확인 하는 과정이 필요 하다.
-  String? redirectLogic(GoRouterState state) {
+  String? redirectLogic(BuildContext context, GoRouterState state) {
     final UserModelBase? user = ref.read(userMeProvider);
 
-    final logginIn = state.uri.toString() == '/login';
+    final logginIn = state.matchedLocation == '/login';
 
     // 유저 정보가 없는데
     // 로그인 중이면 그대로 로그인 페이지에 두고
@@ -45,7 +76,7 @@ class AuthProvider extends ChangeNotifier {
     // 로그인 중 이거나 현재 위치가 SplashScreen 이면
     // 홈으로 이동
     if (user is UserModel) {
-      return logginIn || state.uri.toString() == '/splash' ? '/' : null;
+      return logginIn || state.matchedLocation == '/splash' ? '/' : null;
     }
 
     // UserModelError
