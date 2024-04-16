@@ -3,6 +3,13 @@ import 'package:restaurant_api/product/model/product_model.dart';
 import 'package:restaurant_api/user/model/basket_item_model.dart';
 import 'package:collection/collection.dart';
 
+final basketProvider =
+    StateNotifierProvider<BasketProvider, List<BasketItemModel>>(
+  (ref) {
+    return BasketProvider();
+  },
+);
+
 class BasketProvider extends StateNotifier<List<BasketItemModel>> {
   BasketProvider() : super([]);
 
