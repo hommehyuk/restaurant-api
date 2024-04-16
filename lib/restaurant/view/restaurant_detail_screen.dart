@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:restaurant_api/common/const/colors.dart';
 import 'package:restaurant_api/common/layout/default_layout.dart';
 import 'package:restaurant_api/common/model/cursor_pagination_model.dart';
@@ -13,6 +14,7 @@ import 'package:restaurant_api/restaurant/model/restaurant_detail_model.dart';
 import 'package:restaurant_api/restaurant/model/restaurant_model.dart';
 import 'package:restaurant_api/restaurant/provider/restaurant_provider.dart';
 import 'package:restaurant_api/restaurant/provider/restaurant_rating_provider.dart';
+import 'package:restaurant_api/restaurant/view/basket_screen.dart';
 import 'package:restaurant_api/user/provider/basket_provider.dart';
 import 'package:skeletons/skeletons.dart';
 import 'package:badges/badges.dart' as badges;
@@ -61,7 +63,7 @@ class _RestaurantDetailScreenState
     final basket = ref.watch(basketProvider);
 
     if (state == null) {
-      return DefaultLayout(
+      return const DefaultLayout(
         child: Center(
           child: CircularProgressIndicator(),
         ),
@@ -71,8 +73,15 @@ class _RestaurantDetailScreenState
     return DefaultLayout(
       title: '불타는 떡볶이',
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          context.pushNamed(BasketScreen.routeName);
+        },
         backgroundColor: PRIMARY_COLOR,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(
+            32.0,
+          ),
+        ),
         child: badges.Badge(
           showBadge: basket.isNotEmpty,
           badgeContent: Text(
@@ -82,22 +91,17 @@ class _RestaurantDetailScreenState
                   (previous, next) => previous + next.count,
                 )
                 .toString(),
-            style: TextStyle(
+            style: const TextStyle(
               color: PRIMARY_COLOR,
               fontSize: 10.0,
             ),
           ),
-          badgeStyle: badges.BadgeStyle(
+          badgeStyle: const badges.BadgeStyle(
             badgeColor: Colors.white,
           ),
-          child: Icon(
+          child: const Icon(
             Icons.shopping_basket_outlined,
             color: Colors.white,
-          ),
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(
-            32.0,
           ),
         ),
       ),
@@ -127,7 +131,7 @@ class _RestaurantDetailScreenState
     required List<RatingModel> models,
   }) {
     return SliverPadding(
-      padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
       sliver: SliverList(
         delegate: SliverChildBuilderDelegate(
           (_, index) => Padding(
@@ -144,7 +148,7 @@ class _RestaurantDetailScreenState
 
   SliverPadding renderLoading() {
     return SliverPadding(
-      padding: EdgeInsets.symmetric(
+      padding: const EdgeInsets.symmetric(
         vertical: 16.0,
         horizontal: 16.0,
       ),
@@ -155,7 +159,7 @@ class _RestaurantDetailScreenState
             (index) => Padding(
               padding: const EdgeInsets.only(bottom: 32.0),
               child: SkeletonParagraph(
-                style: SkeletonParagraphStyle(
+                style: const SkeletonParagraphStyle(
                   lines: 5,
                   padding: EdgeInsets.zero,
                 ),
@@ -168,7 +172,7 @@ class _RestaurantDetailScreenState
   }
 
   SliverPadding renderLabel() {
-    return SliverPadding(
+    return const SliverPadding(
       padding: EdgeInsets.symmetric(horizontal: 16.0),
       sliver: SliverToBoxAdapter(
         child: Text(
@@ -187,7 +191,7 @@ class _RestaurantDetailScreenState
     required List<RestaurantProductModel> products,
   }) {
     return SliverPadding(
-      padding: EdgeInsets.symmetric(horizontal: 16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
       sliver: SliverList(
         delegate: SliverChildBuilderDelegate(
           (context, index) {
