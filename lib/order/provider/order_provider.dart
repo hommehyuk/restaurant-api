@@ -45,7 +45,10 @@ class OrderStateNotifier extends StateNotifier<List<OrderModel>> {
                 ),
               )
               .toList(),
-          totalPrice: state.fold(0, (p, n) => p + n.count + n.product.price),
+          totalPrice: state.fold<int>(
+            0,
+            (p, n) => p + (n.count * n.product.price),
+          ),
           createdAt: DateTime.now().toString(),
         ),
       );

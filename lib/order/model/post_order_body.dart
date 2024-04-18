@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:restaurant_api/user/model/basket_item_model.dart';
 
 part 'post_order_body.g.dart';
 
