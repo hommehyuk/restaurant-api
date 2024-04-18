@@ -1,4 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:restaurant_api/common/model/cursor_pagination_model.dart';
+import 'package:restaurant_api/common/provider/pagination_provider.dart';
 import 'package:restaurant_api/order/model/order_model.dart';
 import 'package:restaurant_api/order/model/post_order_body.dart';
 import 'package:restaurant_api/order/repository/order_repository.dart';
@@ -6,7 +8,7 @@ import 'package:restaurant_api/user/provider/basket_provider.dart';
 import 'package:uuid/uuid.dart';
 
 final orderProvider =
-    StateNotifierProvider<OrderStateNotifier, List<OrderModel>>(
+    StateNotifierProvider<OrderStateNotifier, CursorPaginationBase>(
   (ref) {
     final repo = ref.watch(orderRepositoryProvider);
 
@@ -17,14 +19,14 @@ final orderProvider =
   },
 );
 
-class OrderStateNotifier extends StateNotifier<List<OrderModel>> {
+class OrderStateNotifier
+    extends PaginationProvider<OrderModel, OrderRepository> {
   final Ref ref;
-  final OrderRepository repository;
 
   OrderStateNotifier({
     required this.ref,
-    required this.repository,
-  }) : super([]);
+    required super.repository,
+  });
 
   Future<bool> postOrder() async {
     try {

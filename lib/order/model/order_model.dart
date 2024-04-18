@@ -30,7 +30,7 @@ class OrderProductModel {
 
 @JsonSerializable()
 class OrderProductAndCountModel {
-  final OrderProductAndCountModel product;
+  final OrderProductModel product;
   final int count;
 
   OrderProductAndCountModel({

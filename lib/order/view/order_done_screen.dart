@@ -35,9 +35,17 @@ class OrderDoneScreen extends StatelessWidget {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: PRIMARY_COLOR,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                    4.0,
+                  ),
+                ),
               ),
               child: const Text(
                 '홈으로',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
               ),
             ),
           ],
