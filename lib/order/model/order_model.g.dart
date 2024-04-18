@@ -27,8 +27,8 @@ Map<String, dynamic> _$OrderProductModelToJson(OrderProductModel instance) =>
 OrderProductAndCountModel _$OrderProductAndCountModelFromJson(
         Map<String, dynamic> json) =>
     OrderProductAndCountModel(
-      product: OrderProductAndCountModel.fromJson(
-          json['product'] as Map<String, dynamic>),
+      product:
+          OrderProductModel.fromJson(json['product'] as Map<String, dynamic>),
       count: json['count'] as int,
     );
 
